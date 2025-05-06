@@ -13,7 +13,7 @@ CREATE TABLE Trades (
     id INT AUTO_INCREMENT PRIMARY KEY,
     trade_name VARCHAR(100) NOT NULL
 );
-
+|
 -- Trainees Table
 CREATE TABLE Trainees (
     trainee_id INT AUTO_INCREMENT PRIMARY KEY,

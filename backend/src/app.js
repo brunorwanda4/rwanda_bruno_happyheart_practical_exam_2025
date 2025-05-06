@@ -17,7 +17,7 @@ app.get('/', (req, res) => {
     res.send("Welcome to hell ⛑️")
 })
 
-app.use(authRouters)
+app.use('/api/',authRouters)
 app.use('/api/users', usersRoutes);
 app.use('/api/trades', tradesRoutes);
 app.use('/api/trainees', traineesRoutes);

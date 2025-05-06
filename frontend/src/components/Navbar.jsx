@@ -12,22 +12,19 @@ const Navbar = () => {
       <div className="flex-none">
         <ul className="menu menu-horizontal px-1 gap-2">
           <li>
-            <Link to="/">Home</Link>
+            <Link to="/admin">Home</Link>
           </li>
           <li>
-            <Link to="/users">Users</Link>
+            <Link to="/admin/trades">Trades</Link>
           </li>
           <li>
-            <Link to="/trades">Trades</Link>
+            <Link to="/admin/trainees">Trainees</Link>
           </li>
           <li>
-            <Link to="/trainees">Trainees</Link>
+            <Link to="/admin/modules">Modules</Link>
           </li>
           <li>
-            <Link to="/modules">Modules</Link>
-          </li>
-          <li>
-            <Link to="/marks">Marks</Link>
+            <Link to="/admin/marks">Marks</Link>
           </li>
         </ul>
       </div>
