@@ -1,4 +1,5 @@
 const bcrypt = require("bcrypt");
+const jwt = require('jsonwebtoken');
 const db = require("../config/db");
 
 exports.signup = async (req, res) => {
@@ -30,6 +31,8 @@ exports.signup = async (req, res) => {
   }
 };
 
+const JWT_SECRET = process.env.JWT_SECRET || 'your-very-strong-secret-key'; // Replace with a strong, unique secret
+
 exports.login = async (req, res) => {
   const { username, password } = req.body;
 
@@ -50,9 +53,31 @@ exports.login = async (req, res) => {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
+    // If credentials are correct, generate a JWT
+    const payload = {
+      user_id: user.user_id,
+      username: user.username,
+      // You can add other user-specific information to the payload if needed
+      // For example: role: user.role
+    };
+
+    // Sign the token
+    const token = jwt.sign(
+      payload,
+      JWT_SECRET,
+      { expiresIn: '1h' } // Token expiration time (e.g., 1 hour, 1d, 7d)
+    );
+
     res
       .status(200)
-      .json({ message: "Login successful", user_id: user.user_id });
+      .json({
+        message: "Login successful",
+        token: token, // Send the token to the client
+        user_id: user.user_id,
+        // You might also want to send some non-sensitive user info
+        username: user.username
+      });
+
   } catch (error) {
     console.error("Login error:", error);
     res.status(500).json({ message: "Server error" });
