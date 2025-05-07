@@ -26,7 +26,7 @@ function LoginPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setError("");
     const { username, password } = formData;
 
     if (!username || !password) {
@@ -42,10 +42,7 @@ function LoginPage() {
 
       const { token } = res.data;
       login(token);
-      // Save token to localStorage
-
       setSuccess(res.data.message || "Login successful!");
-      setError("");
       navigate("/admin");
     } catch (err) {
       const errorMsg =

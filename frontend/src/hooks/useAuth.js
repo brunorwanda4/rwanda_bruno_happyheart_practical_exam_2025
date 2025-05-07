@@ -1,65 +1,51 @@
 import { useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode"; // Install: npm install jwt-decode
 
-const useAuth = () => {
+const UseAuth = () => {
   const [token, setToken] = useState(localStorage.getItem("authToken"));
   const [user, setUser] = useState(null);
-  const [isAdmin, setIsAdmin] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [loading, setLoading] = useState(true); // New state
+
+  const handleToken = (token) => {
+    try {
+      const decodedToken = jwtDecode(token);
+
+      if (decodedToken.exp && decodedToken.exp * 1000 < Date.now()) {
+        throw new Error("Token expired");
+      }
+
+      setUser(decodedToken);
+      // const adminStatus = decodedToken.role === "admin" || decodedToken.isAdmin === true;
+      setIsAdmin(true);
+    } catch (error) {
+      console.error("Invalid or expired token:", error.message);
+      localStorage.removeItem("authToken");
+      setToken(null);
+      setUser(null);
+      setIsAdmin(false);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     const storedToken = localStorage.getItem("authToken");
     if (storedToken) {
       setToken(storedToken);
-      try {
-        const decodedToken = jwtDecode(storedToken); // Decode the token
-        setUser(decodedToken);
-        // if (decodedToken.role === 'admin' || decodedToken.isAdmin === true) {
-        //   setIsAdmin(true);
-        // } else {
-        //   setIsAdmin(false);
-        // }
-        if (decodedToken) {
-          setIsAdmin(true);
-        } else {
-          setIsAdmin(false);
-        }
-      } catch (error) {
-        console.error("Invalid token:", error);
-        // Handle invalid token (e.g., clear it, logout user)
-        localStorage.removeItem("authToken");
-        setToken(null);
-        setUser(null);
-        setIsAdmin(false);
-      }
+      handleToken(storedToken);
     } else {
       setToken(null);
       setUser(null);
       setIsAdmin(false);
+      setLoading(false);
     }
-  }, []); // Runs once on mount or when localStorage might change externally
+  }, []);
 
   const login = (newToken) => {
     localStorage.setItem("authToken", newToken);
-    console.log({data : newToken, message : "Hello is working 🌼"})
     setToken(newToken);
-    try {
-      const decodedToken = jwtDecode(newToken);
-      setUser(decodedToken);
-      // if (decodedToken.role === 'admin' || decodedToken.isAdmin === true) {
-      //   setIsAdmin(true);
-      // } else {
-      //   setIsAdmin(false);
-      // }
-      if (decodedToken) {
-        setIsAdmin(true);
-      } else {
-        setIsAdmin(false);
-      }
-      setIsAdmin(true);
-    } catch (error) {
-      console.error("Error decoding new token:", error);
-      setIsAdmin(false); // Default to not admin if token is bad
-    }
+    handleToken(newToken);
   };
 
   const logout = () => {
@@ -67,9 +53,10 @@ const useAuth = () => {
     setToken(null);
     setUser(null);
     setIsAdmin(false);
+    setLoading(false);
   };
 
-  return { token, user, isAdmin, login, logout };
+  return { token, user, isAdmin, login, logout, loading };
 };
 
-export default useAuth;
+export default UseAuth

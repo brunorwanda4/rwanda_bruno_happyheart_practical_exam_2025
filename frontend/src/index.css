@@ -1,6 +1,6 @@
 @import "tailwindcss";
 @plugin "daisyui" {
-  themes: light --default, dark --prefersdark, valentine;
+  themes: light --default, dark --prefersdark, wireframe;
 }
 
 body {
