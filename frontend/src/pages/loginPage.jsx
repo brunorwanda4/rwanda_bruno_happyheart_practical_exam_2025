@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ function LoginPage() {
 
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-
+  const { login } = useAuth();
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -38,6 +39,10 @@ function LoginPage() {
         username,
         password,
       });
+
+      const { token } = res.data;
+      login(token);
+      // Save token to localStorage
 
       setSuccess(res.data.message || "Login successful!");
       setError("");

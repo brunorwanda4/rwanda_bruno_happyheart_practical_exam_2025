@@ -19,7 +19,7 @@ exports.signup = async (req, res) => {
 
     await db
       .promise()
-      .query("INSERT INTO Users (username, hash_password) VALUES (?, ?)", [
+      .query("INSERT INTO Users (username, password_hash) VALUES (?, ?)", [
         username,
         hashedPassword,
       ]);
@@ -32,7 +32,6 @@ exports.signup = async (req, res) => {
 };
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-very-strong-secret-key'; // Replace with a strong, unique secret
-
 exports.login = async (req, res) => {
   const { username, password } = req.body;
 
@@ -47,7 +46,7 @@ exports.login = async (req, res) => {
 
     const user = users[0];
 
-    const isMatch = await bcrypt.compare(password, user.hash_password);
+    const isMatch = await bcrypt.compare(password, user.password_hash);
 
     if (!isMatch) {
       return res.status(401).json({ message: "Invalid credentials" });
@@ -57,26 +56,17 @@ exports.login = async (req, res) => {
     const payload = {
       user_id: user.user_id,
       username: user.username,
-      // You can add other user-specific information to the payload if needed
-      // For example: role: user.role
+      // Add additional user info to payload if needed
     };
 
-    // Sign the token
-    const token = jwt.sign(
-      payload,
-      JWT_SECRET,
-      { expiresIn: '1h' } // Token expiration time (e.g., 1 hour, 1d, 7d)
-    );
+    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' });
 
-    res
-      .status(200)
-      .json({
-        message: "Login successful",
-        token: token, // Send the token to the client
-        user_id: user.user_id,
-        // You might also want to send some non-sensitive user info
-        username: user.username
-      });
+    res.status(200).json({
+      message: "Login successful",
+      token,
+      user_id: user.user_id,
+      username: user.username
+    });
 
   } catch (error) {
     console.error("Login error:", error);
