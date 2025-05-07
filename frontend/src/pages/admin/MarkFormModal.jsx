@@ -147,7 +147,7 @@ const MarkFormModal = ({
                 value={formData.trade_id}
                 onChange={handleChange}
                 required
-                disabled={filteredTrades.length <= 1}
+                // disabled={filteredTrades.length <= 1}
               >
                 {filteredTrades.map(trade => (
                   <option key={trade.id} value={trade.id}>

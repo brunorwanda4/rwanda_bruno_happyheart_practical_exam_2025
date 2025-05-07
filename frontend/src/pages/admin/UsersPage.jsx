@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { FaPlus, FaSync } from 'react-icons/fa';
 import UsersTable from '../../components/tables/UsersTable';
 import UserFormModal from './UserFormModal';
-import { jwtDecode } from 'jwt-decode';
 
 const UsersPage = () => {
   const [users, setUsers] = useState([]);
@@ -67,9 +66,6 @@ const UsersPage = () => {
       setError(err.message);
     }
   };
-  const storedToken = localStorage.getItem("authToken");
-
-  const decodedToken = jwtDecode(storedToken);
   return (
     <div className="container mx-auto px-4 py-6">
       <div className="flex justify-between items-center mb-6">
@@ -129,7 +125,6 @@ const UsersPage = () => {
         onSubmit={handleSubmit}
         user={currentUser}
       />
-      {decodedToken.username}
     </div>
   );
 };

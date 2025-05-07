@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import { FaPlus, FaSync } from 'react-icons/fa';
+import { FaPlus, FaSync, FaXbox } from 'react-icons/fa';
 import TradesTable from '../../components/tables/TradesTable';
 import TradeFormModal from '../../components/model/TradeFormModal';
-
+import { BsX } from "react-icons/bs"
 const TradesPage = () => {
   const [trades, setTrades] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -89,10 +89,8 @@ const TradesPage = () => {
 
       {error && (
         <div className="alert alert-error mb-4">
-          <div>
-            <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
+          <div className=' flex'>
+            <BsX size={24}/>
             <span>{error}</span>
           </div>
         </div>

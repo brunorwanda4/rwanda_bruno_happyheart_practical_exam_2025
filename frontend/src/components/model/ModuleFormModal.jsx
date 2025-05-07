@@ -1,31 +1,31 @@
-import { useEffect, useState } from 'react';
-import { FaTimes } from 'react-icons/fa';
+import { useEffect, useState } from "react";
+import { FaTimes } from "react-icons/fa";
 
 const ModuleFormModal = ({ isOpen, onClose, onSubmit, module }) => {
   const [formData, setFormData] = useState({
-    modName: '',
-    modCredits: 0
+    modName: "",
+    modCredits: 0,
   });
 
   useEffect(() => {
     if (module) {
       setFormData({
         modName: module.modName,
-        modCredits: module.modCredits
+        modCredits: module.modCredits,
       });
     } else {
       setFormData({
-        modName: '',
-        modCredits: 0
+        modName: "",
+        modCredits: 0,
       });
     }
   }, [module]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: name === 'modCredits' ? parseInt(value) || 0 : value
+      [name]: name === "modCredits" ? parseInt(value) || 0 : value,
     }));
   };
 
@@ -38,21 +38,30 @@ const ModuleFormModal = ({ isOpen, onClose, onSubmit, module }) => {
 
   return (
     <div className="modal modal-open">
+           {" "}
       <div className="modal-box">
+               {" "}
         <div className="flex justify-between items-center mb-4">
+                   {" "}
           <h3 className="text-lg font-bold">
-            {module ? 'Edit Module' : 'Add New Module'}
+                        {module ? "Edit Module" : "Add New Module"}         {" "}
           </h3>
+                   {" "}
           <button onClick={onClose} className="btn btn-sm btn-circle">
-            <FaTimes />
+                        <FaTimes />         {" "}
           </button>
+                 {" "}
         </div>
-        
+                       {" "}
         <form onSubmit={handleSubmit}>
+                   {" "}
           <div className="form-control">
+                       {" "}
             <label className="label">
-              <span className="label-text">Module Name</span>
+                            <span className="label-text">Module Name</span>     
+                   {" "}
             </label>
+                       {" "}
             <input
               type="text"
               name="modName"
@@ -61,12 +70,16 @@ const ModuleFormModal = ({ isOpen, onClose, onSubmit, module }) => {
               onChange={handleChange}
               required
             />
+                     {" "}
           </div>
-          
+                             {" "}
           <div className="form-control mt-4">
+                       {" "}
             <label className="label">
-              <span className="label-text">Credits</span>
+                            <span className="label-text">Credits</span>         
+               {" "}
             </label>
+                       {" "}
             <input
               type="number"
               name="modCredits"
@@ -76,18 +89,25 @@ const ModuleFormModal = ({ isOpen, onClose, onSubmit, module }) => {
               onChange={handleChange}
               required
             />
+                     {" "}
           </div>
-          
+                             {" "}
           <div className="modal-action mt-6">
+                       {" "}
             <button type="button" onClick={onClose} className="btn btn-ghost">
-              Cancel
+                            Cancel            {" "}
             </button>
+                       {" "}
             <button type="submit" className="btn btn-primary">
-              {module ? 'Update' : 'Save'}
+                            {module ? "Update" : "Save"}           {" "}
             </button>
+                     {" "}
           </div>
+                 {" "}
         </form>
+             {" "}
       </div>
+         {" "}
     </div>
   );
 };

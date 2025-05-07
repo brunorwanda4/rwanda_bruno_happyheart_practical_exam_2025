@@ -8,7 +8,6 @@ import AdminProtectedRoute from './components/AdminProtectedRoute'; // Import th
 
 const App = () => {
   return (
-    // <AuthProvider> {/* If using Context API */}
     <BrowserRouter>
       <div className='min-h-screen'>
         <Routes>
@@ -21,7 +20,6 @@ const App = () => {
         </Routes>
       </div>
     </BrowserRouter>
-    // </AuthProvider>
   );
 };
 

@@ -5,6 +5,7 @@ import TradesPage from "./TradesPage";
 import TraineesPage from "./TraineesPage";
 import ModulesPage from "./ModulesPage";
 import MarksPage from "./MarksPage";
+import DashboardPage from "./dashboardPage";
 
 const AdminLayout = () => {
   return (
@@ -12,7 +13,8 @@ const AdminLayout = () => {
       <Sidebar />
       <div className="flex-1 pl-64 p-6">
         <Routes>
-          <Route path="/" element={<UsersPage />} />
+          <Route path="/" element={<DashboardPage />} />
+          <Route path="/users" element={<UsersPage />} />
           <Route path="/trades" element={<TradesPage />} />
           <Route path="/trainees" element={<TraineesPage />} />
           <Route path="/modules" element={<ModulesPage />} />

@@ -7,7 +7,7 @@ import { FaEdit, FaTrash } from 'react-icons/fa'; // Importing icons
  * This component assumes you are handling data securely and only passing necessary fields.
  * @param {Object} props - Component props.
  * @param {Array<Object>} props.users - Array of user objects to display.
- * @param {function(number): void} [props.onEdit] - Callback function when edit is clicked. Receives user_id.
+ * @param {function(Object): void} [props.onEdit] - Callback function when edit is clicked. Receives the full user object.
  * @param {function(number): void} [props.onDelete] - Callback function when delete is clicked. Receives user_id.
  */
 const UsersTable = ({ users, onEdit, onDelete }) => {
@@ -40,7 +40,9 @@ const UsersTable = ({ users, onEdit, onDelete }) => {
                   {onEdit && (
                     <button
                       className="btn btn-ghost btn-xs" // DaisyUI button classes
-                      onClick={() => onEdit(user.user_id)}
+                      // --- FIX ---
+                      // Pass the entire user object to the onEdit handler
+                      onClick={() => onEdit(user)}
                       aria-label={`Edit user ${user.username}`}
                     >
                       <FaEdit />
@@ -51,7 +53,7 @@ const UsersTable = ({ users, onEdit, onDelete }) => {
                     <button
                       className="btn btn-ghost btn-xs text-error" // DaisyUI button classes, text-error for red icon
                       onClick={() => onDelete(user.user_id)}
-                       aria-label={`Delete user ${user.username}`}
+                      aria-label={`Delete user ${user.username}`}
                     >
                       <FaTrash />
                     </button>

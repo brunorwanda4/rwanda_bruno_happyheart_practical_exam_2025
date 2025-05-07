@@ -5,7 +5,7 @@ import { FaEdit, FaTrash } from 'react-icons/fa'; // Importing icons
  * Displays a table of modules.
  * @param {Object} props - Component props.
  * @param {Array<Object>} props.modules - Array of module objects to display.
- * @param {function(number): void} [props.onEdit] - Callback function when edit is clicked. Receives module_id.
+ * @param {function(Object): void} [props.onEdit] - Callback function when edit is clicked. Receives the full module object.
  * @param {function(number): void} [props.onDelete] - Callback function when delete is clicked. Receives module_id.
  */
 const ModulesTable = ({ modules, onEdit, onDelete }) => {
@@ -39,8 +39,10 @@ const ModulesTable = ({ modules, onEdit, onDelete }) => {
                   {onEdit && (
                     <button
                       className="btn btn-ghost btn-xs" // DaisyUI button classes
-                      onClick={() => onEdit(module.module_id)}
-                       aria-label={`Edit module ${module.modName}`}
+                      // --- FIX ---
+                      // Pass the entire module object to the onEdit handler
+                      onClick={() => onEdit(module)}
+                      aria-label={`Edit module ${module.modName}`}
                     >
                       <FaEdit />
                     </button>
@@ -50,7 +52,7 @@ const ModulesTable = ({ modules, onEdit, onDelete }) => {
                     <button
                       className="btn btn-ghost btn-xs text-error" // DaisyUI button classes, text-error for red icon
                       onClick={() => onDelete(module.module_id)}
-                       aria-label={`Delete module ${module.modName}`}
+                      aria-label={`Delete module ${module.modName}`}
                     >
                       <FaTrash />
                     </button>

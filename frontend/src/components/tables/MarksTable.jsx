@@ -14,10 +14,10 @@ const MarksTable = ({ marks, onEdit, onDelete }) => {
         <thead>
           <tr>
             <th>Mark ID</th>
-            <th>Trainee ID</th>
-            <th>Trade ID</th>
-            <th>Module ID</th>
-            <th>User ID</th>
+            <th>Trainee Name</th> {/* Combined first and last name */}
+            <th>Trade</th>
+            <th>Module</th>
+            <th>Username</th>
             <th>Formative Ass.</th>
             <th>Summative Ass.</th>
             <th>Comprehensive Ass.</th>
@@ -30,10 +30,14 @@ const MarksTable = ({ marks, onEdit, onDelete }) => {
             // Using markId as a unique key
             <tr key={mark.markId}>
               <td>{mark.markId}</td>
-              <td>{mark.trainee_id}</td>
-              <td>{mark.trade_id}</td>
-              <td>{mark.module_id}</td>
-              <td>{mark.user_id}</td>
+              {/* Displaying Trainee First and Last Name */}
+              <td>{`${mark.trainee_firstName} ${mark.trainee_lastName}`}</td>
+              {/* Displaying Trade Name */}
+              <td>{mark.trade_name}</td>
+              {/* Displaying Module Name */}
+              <td>{mark.modName}</td>
+              {/* Displaying Username */}
+              <td>{mark.username}</td>
               <td>{mark.formative_ass}</td>
               <td>{mark.summative_ass}</td>
               <td>{mark.comprehensive_ass}</td>
@@ -44,8 +48,8 @@ const MarksTable = ({ marks, onEdit, onDelete }) => {
                   {onEdit && (
                     <button
                       className="btn btn-ghost btn-xs" // DaisyUI button classes
-                      onClick={() => onEdit(mark.markId)}
-                       aria-label={`Edit mark ${mark.markId}`}
+                      onClick={() => onEdit(mark)} // Pass the entire mark object or mark.markId depending on onEdit
+                      aria-label={`Edit mark ${mark.markId}`}
                     >
                       <FaEdit />
                     </button>
@@ -55,7 +59,7 @@ const MarksTable = ({ marks, onEdit, onDelete }) => {
                     <button
                       className="btn btn-ghost btn-xs text-error" // DaisyUI button classes, text-error for red icon
                       onClick={() => onDelete(mark.markId)}
-                       aria-label={`Delete mark ${mark.markId}`}
+                      aria-label={`Delete mark ${mark.markId}`}
                     >
                       <FaTrash />
                     </button>
