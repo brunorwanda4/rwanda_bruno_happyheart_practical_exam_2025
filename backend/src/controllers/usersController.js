@@ -1,8 +1,7 @@
 const db = require("../config/db");
 const bcrypt = require("bcrypt");
 
-// Create a new user
-// Refactored to use .then()/.catch() for bcrypt.hash instead of async/await
+
 exports.createUser = (req, res) => {
   const { username, password } = req.body;
 
@@ -11,16 +10,12 @@ exports.createUser = (req, res) => {
     return res.status(400).json({ message: "Username and password are required" });
   }
 
-  // Hash the password using bcrypt.hash which returns a Promise
   bcrypt.hash(password, 10)
     .then(hash => {
-      // Once the password is hashed, perform the database insert using the callback pattern
       db.query("INSERT INTO Users (username, hash_password) VALUES (?, ?)", [username, hash],
         (err, result) => {
           if (err) {
-            // Log database error
             console.error("Database error creating user:", err);
-            // Send a generic server error response
             return res.status(500).json({ message: "Failed to create user" });
           }
           // Send success response with the new user's ID

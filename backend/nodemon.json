@@ -1,6 +1,5 @@
 {
     "watch" : ["./src"],
     "ex" : "js",
-    "ignore" : ["dist"],
     "exec" : "node ./src/app.js"
 }
